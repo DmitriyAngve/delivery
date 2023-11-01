@@ -2,11 +2,9 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    } // Настройка путей импорта. Означает, что все импорты, начинающиеся с "@/", будут разрешены, начиная с текущей директории
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
