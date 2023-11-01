@@ -7,10 +7,12 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import { Link } from "expo-router";
+import BottomSheet from "./BottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const SearchBar = () => (
   <View style={styles.searchContainer}>
@@ -37,16 +39,24 @@ const SearchBar = () => (
 );
 
 function CustomHeader() {
+  // Используя "ref" и ф-ию "openModal" вызывается ф-ия "bottomSheetRef.current?.present();" для октрытия нижнего модального окна
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const openModal = () => {
+    bottomSheetRef.current?.present();
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
+      <BottomSheet ref={bottomSheetRef} />
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openModal}>
           <Image
             style={styles.bike}
             source={require("../assets/images/bike.png")}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.titleContainer}>
+        <TouchableOpacity style={styles.titleContainer} onPress={openModal}>
           <Text style={styles.title}>Delivery - Now</Text>
           <View style={styles.locationName}>
             <Text style={styles.subtitle}>Moscow</Text>
