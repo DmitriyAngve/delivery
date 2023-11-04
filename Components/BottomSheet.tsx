@@ -1,6 +1,11 @@
 import React, { forwardRef, useCallback, useMemo } from "react";
-import { View, Text } from "react-native";
-import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  useBottomSheetModal,
+} from "@gorhom/bottom-sheet";
+import Colors from "../constants/Colors";
 
 export type Ref = BottomSheetModal;
 
@@ -19,19 +24,78 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
       />
     ),
     []
-  ); // раотает так же как и useMemo, но для ф-ий
+  ); // работает так же как и useMemo, но для ф-ий
+
+  const { dismiss } = useBottomSheetModal();
+
   // "overDragResistanceFactor" отвечает за то насколько сопротивляется смешению панелей при перетаскивании.
   return (
     <BottomSheetModal
+      handleIndicatorStyle={{ display: "none" }} // убирает черту у верхней границы модального окна
+      backgroundStyle={{ borderRadius: 0, backgroundColor: Colors.lightGrey }}
       overDragResistanceFactor={0}
       ref={ref}
       snapPoints={snapPoints}
       backdropComponent={renderBackdrop} // этот атрибут помогает настроить компонент, который будет отображаться как задний фон (backdrop) за моей нижней панелью (модалкой). Ф-ия "renderBackdrop", которая создает "BottomSheetBackdrop", чтобы настроить внешний вид фона.
     >
-      <View>
-        <Text>Bottom Sheet</Text>
+      <View style={styles.contentContainer}>
+        <View style={styles.toggle}>
+          <TouchableOpacity style={styles.toggleActive}>
+            <Text style={styles.activeText}>Delivery</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.toggleInactive}>
+            <Text style={styles.inactiveText}>Pickup</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={() => dismiss()}>
+          <Text style={styles.buttonText}>Confirm</Text>
+        </TouchableOpacity>
       </View>
     </BottomSheetModal>
   );
 });
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    flex: 1,
+  },
+  toggle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
+    marginBottom: 32,
+  },
+  toggleActive: {
+    backgroundColor: Colors.primary,
+    padding: 8,
+    borderRadius: 32,
+    paddingHorizontal: 30,
+  },
+  activeText: {
+    color: "#fff",
+    fontWeight: "700",
+  },
+  toggleInactive: {
+    padding: 8,
+    borderRadius: 32,
+    paddingHorizontal: 30,
+  },
+  inactiveText: {
+    color: Colors.primary,
+    fontWeight: "700",
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    padding: 16,
+    margin: 16,
+    borderRadius: 4,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+});
+
 export default BottomSheet;
