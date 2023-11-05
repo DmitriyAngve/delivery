@@ -36,7 +36,8 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
       overDragResistanceFactor={0}
       ref={ref}
       snapPoints={snapPoints}
-      backdropComponent={renderBackdrop} // этот атрибут помогает настроить компонент, который будет отображаться как задний фон (backdrop) за моей нижней панелью (модалкой). Ф-ия "renderBackdrop", которая создает "BottomSheetBackdrop", чтобы настроить внешний вид фона.
+      backdropComponent={renderBackdrop} 
+      // этот атрибут помогает настроить компонент, который будет отображаться как задний фон (backdrop) за моей нижней панелью (модалкой). Ф-ия "renderBackdrop", которая создает "BottomSheetBackdrop", чтобы настроить внешний вид фона.
     >
       <View style={styles.contentContainer}>
         <View style={styles.toggle}>
