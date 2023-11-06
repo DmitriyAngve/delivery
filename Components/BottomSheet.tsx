@@ -6,6 +6,7 @@ import {
   useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import Colors from "../constants/Colors";
+import { Link } from "expo-router";
 
 export type Ref = BottomSheetModal;
 
@@ -36,7 +37,7 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
       overDragResistanceFactor={0}
       ref={ref}
       snapPoints={snapPoints}
-      backdropComponent={renderBackdrop} 
+      backdropComponent={renderBackdrop}
       // этот атрибут помогает настроить компонент, который будет отображаться как задний фон (backdrop) за моей нижней панелью (модалкой). Ф-ия "renderBackdrop", которая создает "BottomSheetBackdrop", чтобы настроить внешний вид фона.
     >
       <View style={styles.contentContainer}>
@@ -48,6 +49,16 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
             <Text style={styles.inactiveText}>Pickup</Text>
           </TouchableOpacity>
         </View>
+
+        <Text style={styles.subheader}>Your Location</Text>
+        <Link href={"/"} asChild>
+          <TouchableOpacity>
+            <View>
+              <Text>Use current location</Text>
+            </View>
+          </TouchableOpacity>
+        </Link>
+        <Text style={styles.subheader}>Arival Time</Text>
 
         <TouchableOpacity style={styles.button} onPress={() => dismiss()}>
           <Text style={styles.buttonText}>Confirm</Text>
@@ -96,6 +107,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  subheader: {
+    fontSize: 16,
+    fontWeight: "600",
+    margin: 16,
   },
 });
 
