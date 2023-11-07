@@ -7,6 +7,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import Colors from "../constants/Colors";
 import { Link } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export type Ref = BottomSheetModal;
 
@@ -54,11 +55,33 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
         <Link href={"/"} asChild>
           <TouchableOpacity>
             <View style={styles.item}>
-              <Text style={{}}>Current location</Text>
+              <Ionicons
+                name="location-outline"
+                size={20}
+                color={Colors.medium}
+              />
+              <Text style={{ flex: 1 }}>Current location</Text>
+              <Ionicons
+                name="chevron-forward"
+                size={20}
+                color={Colors.primary}
+              />
             </View>
           </TouchableOpacity>
         </Link>
-        <Text style={styles.subheader}>Arival Time</Text>
+
+        <Text style={styles.subheader}>Arival time</Text>
+        <TouchableOpacity>
+          <View style={styles.item}>
+            <Ionicons
+              name="stopwatch-outline"
+              size={20}
+              color={Colors.medium}
+            />
+            <Text style={{ flex: 1 }}>Now</Text>
+            <Ionicons name="chevron-forward" size={20} color={Colors.primary} />
+          </View>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={() => dismiss()}>
           <Text style={styles.buttonText}>Confirm</Text>
@@ -116,6 +139,11 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     gap: 8,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 16,
+    borderColor: Colors.grey,
+    borderWidth: 1,
   },
 });
 
