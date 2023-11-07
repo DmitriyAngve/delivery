@@ -53,8 +53,8 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
         <Text style={styles.subheader}>Your Location</Text>
         <Link href={"/"} asChild>
           <TouchableOpacity>
-            <View>
-              <Text>Use current location</Text>
+            <View style={styles.item}>
+              <Text style={{}}>Current location</Text>
             </View>
           </TouchableOpacity>
         </Link>
@@ -112,6 +112,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     margin: 16,
+  },
+  item: {
+    flexDirection: "row",
+    gap: 8,
   },
 });
 
