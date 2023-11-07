@@ -29,7 +29,7 @@ const SearchBar = () => (
           placeholder="Restarauts, grociries, dishes"
         />
       </View>
-      <Link href={"/"} asChild>
+      <Link href={"/(modal)/filter"} asChild>
         <TouchableOpacity style={styles.optionButton}>
           <Ionicons name="options-outline" size={20} color={Colors.primary} />
         </TouchableOpacity>
