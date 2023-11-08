@@ -13,7 +13,10 @@ import { useNavigation } from "expo-router";
 import categories from "../../assets/data/filter.json";
 import { Ionicons } from "@expo/vector-icons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 interface Category {
   name: string;
@@ -68,8 +71,9 @@ const Filter = () => {
     const newSelected = selectedItems.length > 0;
 
     if (hasSelected !== newSelected) {
-      console.log("HAS CHANGED");
+      flexWidth.value = newSelected ? 100 : 0;
     }
+    setSelected(selectedItems);
   }, [items]);
 
   // Ф-ия для отмены нажатия всех элементов в массиве "items" (для сброса всех отмеченных галочек)
@@ -137,12 +141,11 @@ const Filter = () => {
       <View style={styles.footer}>
         <View style={styles.btnContainer}>
           {/* FIRST BUTTON */}
-          <TouchableOpacity
-            style={styles.outlineButton}
-            onPress={handleClearAll}
-          >
-            <Text style={styles.outlineButtonText}>Clear all</Text>
-          </TouchableOpacity>
+          <Animated.View style={[animatedStyles, styles.outlineButton]}>
+            <TouchableOpacity onPress={handleClearAll}>
+              <Text style={styles.outlineButtonText}>Clear all</Text>
+            </TouchableOpacity>
+          </Animated.View>
 
           {/* SECOND BUTTON */}
           <TouchableOpacity
@@ -184,6 +187,8 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     borderRadius: 8,
+    flex: 1,
+    height: 56,
   },
   footerText: {
     color: "#fff",
@@ -230,6 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
+    height: 56,
   },
   outlineButtonText: {
     color: Colors.primary,
