@@ -6,11 +6,12 @@ import {
   FlatList,
   ListRenderItem,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "expo-router";
 import categories from "../../assets/data/filter.json";
 import { Ionicons } from "@expo/vector-icons";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 interface Category {
   name: string;
@@ -51,10 +52,27 @@ const ItemBox = () => (
 
 const Filter = () => {
   const navigation = useNavigation();
+  const [items, setItems] = useState<Category[]>(categories);
 
   const renderItem: ListRenderItem<Category> = ({ item }) => (
     <View style={styles.row}>
-      <Text>{item.name}</Text>
+      <Text style={styles.itemText}>
+        {item.name} ({item.count})
+      </Text>
+      {/* disableBuiltInState - атрибут, который отключает встроенное состояние чекбокса, предоставляя контроль над состоянием*/}
+      <BouncyCheckbox
+        fillColor={Colors.primary}
+        unfillColor="#fff"
+        disableBuiltInState
+        iconStyle={{
+          borderColor: Colors.primary,
+          borderRadius: 4,
+          borderWidth: 2,
+        }}
+        innerIconStyle={{ borderColor: Colors.primary, borderRadius: 4 }}
+        onPress={() => {}}
+        isChecked={item.cheched}
+      />
     </View>
   );
 
@@ -131,6 +149,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: Colors.grey,
     borderBottomWidth: 1,
+  },
+  itemText: {
+    flex: 1,
   },
   row: {
     flexDirection: "row",
