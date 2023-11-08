@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import CustomHeader from "../Components/CustomHeader";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
@@ -12,6 +12,7 @@ export const unstable_settings = {
 };
 
 export default function RootLayoutNav() {
+  const navigation = useNavigation();
   return (
     // BottomSheetModalProvider - компонент для работы с нижними модальными окнами
     <BottomSheetModalProvider>
@@ -31,7 +32,11 @@ export default function RootLayoutNav() {
               backgroundColor: Colors.lightGrey,
             },
             headerLeft: () => (
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
                 <Ionicons
                   name="close-outline"
                   size={28}
