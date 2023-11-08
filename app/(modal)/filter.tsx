@@ -5,18 +5,20 @@ import {
   TouchableOpacity,
   FlatList,
   ListRenderItem,
+  Button,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "expo-router";
 import categories from "../../assets/data/filter.json";
 import { Ionicons } from "@expo/vector-icons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
 interface Category {
   name: string;
   count: number;
-  cheched?: boolean;
+  checked?: boolean;
 }
 
 const ItemBox = () => (
@@ -54,13 +56,46 @@ const Filter = () => {
   const navigation = useNavigation();
   const [items, setItems] = useState<Category[]>(categories);
 
-  const renderItem: ListRenderItem<Category> = ({ item }) => (
+  // Дополнительный стейт, если у меня есть выбранные позиции массива "items"
+  const [selected, setSelected] = useState<Category[]>([]);
+
+  // flexWidth - это анимируемое значение, которое начинается с 0. Можно использовать для анимации изменения его значения, например, для изменения ширины и высоты.
+  const flexWidth = useSharedValue(0);
+
+  useEffect(() => {
+    const hasSelected = selected.length > 0;
+    const selectedItems = items.filter((item) => item.checked);
+    const newSelected = selectedItems.length > 0;
+
+    if (hasSelected !== newSelected) {
+      console.log("HAS CHANGED");
+    }
+  }, [items]);
+
+  // Ф-ия для отмены нажатия всех элементов в массиве "items" (для сброса всех отмеченных галочек)
+  const handleClearAll = () => {
+    const updatedItems = items.map((item) => {
+      item.checked = false;
+
+      return item;
+    });
+
+    setItems(updatedItems);
+  };
+
+  // Определяю ширину компонента на основе значения "flexWidth". Когда значение "felxWidth" изменяется, анимированный стиль автоматически обновляется, что приводит к изменению ширины компонента с анимаццией
+  const animatedStyles = useAnimatedStyle(() => {
+    return { width: flexWidth.value };
+  });
+
+  const renderItem: ListRenderItem<Category> = ({ item, index }) => (
     <View style={styles.row}>
       <Text style={styles.itemText}>
         {item.name} ({item.count})
       </Text>
       {/* disableBuiltInState - атрибут, который отключает встроенное состояние чекбокса, предоставляя контроль над состоянием*/}
       <BouncyCheckbox
+        isChecked={items[index].checked}
         fillColor={Colors.primary}
         unfillColor="#fff"
         disableBuiltInState
@@ -70,28 +105,53 @@ const Filter = () => {
           borderWidth: 2,
         }}
         innerIconStyle={{ borderColor: Colors.primary, borderRadius: 4 }}
-        onPress={() => {}}
-        isChecked={item.cheched}
+        onPress={() => {
+          const isChecked = items[index].checked;
+          // Если я нажимаю на кнопку, состояние изменяется:
+          // Определяю, был ли элемент (категория) в массиве "items" ранее отмечен как "checked"
+          // Затем создается новый массив "updatedItems", который копирует все элементы из оригинального массива "items", и для элемента с тем же именем, что и нажатый элемент, инвертирует его состояние (checked)
+          const updatedItems = items.map((item) => {
+            if (item.name === items[index].name) {
+              item.checked = !isChecked;
+            }
+
+            return item;
+          });
+          // Тут новый созданный массив "updatedItems" затем устанавливает в качестве нового состояния с помощью "setItems"
+          setItems(updatedItems);
+        }}
       />
     </View>
   );
 
   return (
     <View style={styles.container}>
+      {/* <Button title="Clear all" onPress={handleClearAll} /> */}
       <FlatList
-        data={categories}
+        data={items}
         renderItem={renderItem}
         ListHeaderComponent={<ItemBox />}
       />
-      <View style={{ height: 78 }}></View>
+      <View style={{ height: 76 }} />
 
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.fullButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.footerText}>Done</Text>
-        </TouchableOpacity>
+        <View style={styles.btnContainer}>
+          {/* FIRST BUTTON */}
+          <TouchableOpacity
+            style={styles.outlineButton}
+            onPress={handleClearAll}
+          >
+            <Text style={styles.outlineButtonText}>Clear all</Text>
+          </TouchableOpacity>
+
+          {/* SECOND BUTTON */}
+          <TouchableOpacity
+            style={styles.fullButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.footerText}>Done</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -158,6 +218,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     backgroundClip: "#fff",
+  },
+  btnContainer: {
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "center",
+  },
+  outlineButton: {
+    borderColor: Colors.primary,
+    borderWidth: 0.5,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
+  outlineButtonText: {
+    color: Colors.primary,
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
 
