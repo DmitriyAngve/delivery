@@ -16,6 +16,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 
 interface Category {
@@ -58,12 +59,11 @@ const ItemBox = () => (
 const Filter = () => {
   const navigation = useNavigation();
   const [items, setItems] = useState<Category[]>(categories);
-
   // Дополнительный стейт, если у меня есть выбранные позиции массива "items"
   const [selected, setSelected] = useState<Category[]>([]);
-
   // flexWidth - это анимируемое значение, которое начинается с 0. Можно использовать для анимации изменения его значения, например, для изменения ширины и высоты.
   const flexWidth = useSharedValue(0);
+  const scale = useSharedValue(0);
 
   useEffect(() => {
     const hasSelected = selected.length > 0;
@@ -71,8 +71,10 @@ const Filter = () => {
     const newSelected = selectedItems.length > 0;
 
     if (hasSelected !== newSelected) {
-      flexWidth.value = newSelected ? 100 : 0;
+      flexWidth.value = withTiming(newSelected ? 150 : 0);
+      scale.value = withTiming(newSelected ? 1 : 0);
     }
+
     setSelected(selectedItems);
   }, [items]);
 
@@ -89,7 +91,11 @@ const Filter = () => {
 
   // Определяю ширину компонента на основе значения "flexWidth". Когда значение "felxWidth" изменяется, анимированный стиль автоматически обновляется, что приводит к изменению ширины компонента с анимаццией
   const animatedStyles = useAnimatedStyle(() => {
-    return { width: flexWidth.value };
+    return { width: flexWidth.value, opacity: flexWidth.value > 0 ? 1 : 0 };
+  });
+
+  const animatedText = useAnimatedStyle(() => {
+    return { transform: [{ scale: scale.value }] };
   });
 
   const renderItem: ListRenderItem<Category> = ({ item, index }) => (
@@ -143,7 +149,9 @@ const Filter = () => {
           {/* FIRST BUTTON */}
           <Animated.View style={[animatedStyles, styles.outlineButton]}>
             <TouchableOpacity onPress={handleClearAll}>
-              <Text style={styles.outlineButtonText}>Clear all</Text>
+              <Animated.Text style={[animatedText, styles.outlineButtonText]}>
+                Clear all
+              </Animated.Text>
             </TouchableOpacity>
           </Animated.View>
 
