@@ -6,7 +6,6 @@ import { useNavigation } from "expo-router";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 // process.env.EXPO_PUBLIC_GOOGLE_API_KEY
-
 const LocationSearch = () => {
   const navigation = useNavigation();
   const [location, setLocation] = useState({
