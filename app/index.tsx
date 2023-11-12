@@ -13,6 +13,7 @@ const Page = () => {
         <Restaraunts />
         <Text style={styles.header}>Top picks in your neighbourhood</Text>
         <Restaraunts />
+        
       </ScrollView>
     </SafeAreaView>
   );
