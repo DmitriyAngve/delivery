@@ -12,7 +12,7 @@ const Page = () => {
         <Categories />
         <Text style={styles.header}>Top picks in your neighbourhood</Text>
         <Restaraunts />
-        <Text style={styles.header}>Top picks in your neighbourhood</Text>
+        <Text style={styles.header}>Offers near you</Text>
         <Restaraunts />
       </ScrollView>
     </SafeAreaView>
