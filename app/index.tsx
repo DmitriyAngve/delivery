@@ -3,6 +3,7 @@ import React from "react";
 import Categories from "../Components/Categories";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Restaraunts from "../Components/Restaurants";
+import Colors from "../constants/Colors";
 
 const Page = () => {
   return (
@@ -13,7 +14,6 @@ const Page = () => {
         <Restaraunts />
         <Text style={styles.header}>Top picks in your neighbourhood</Text>
         <Restaraunts />
-        
       </ScrollView>
     </SafeAreaView>
   );
@@ -21,13 +21,14 @@ const Page = () => {
 
 const styles = StyleSheet.create({
   container: {
-    top: 30,
-    backgroundColor: "#fff",
+    top: 50,
+    backgroundColor: Colors.lightGrey,
   },
   header: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginTop: 16,
+    marginBottom: 8,
     paddingHorizontal: 16,
   },
 });

@@ -26,7 +26,7 @@ const SearchBar = () => (
         />
         <TextInput
           style={styles.input}
-          placeholder="Restarauts, grociries, dishes"
+          placeholder="Restaurants, grociries, dishes"
         />
       </View>
       <Link href={"/(modal)/filter"} asChild>
@@ -81,10 +81,10 @@ function CustomHeader() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    padding: 20,
+    backgroundColor: "#fff",
   },
   container: {
-    height: 60,
+    height: 50,
     backgroundColor: "#fff",
     flexDirection: "row",
     gap: 20,
@@ -93,12 +93,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   bike: {
-    height: 50,
-    width: 50,
+    width: 30,
+    height: 30,
   },
   titleContainer: {
     flex: 1,
-  }, // сдвигает "Home" к иконке велосипедиста
+  },
   title: {
     fontSize: 14,
     color: Colors.medium,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   searchContainer: {
-    height: 60,
+    height: 50,
     backgroundColor: "#fff",
   },
   searchSection: {
