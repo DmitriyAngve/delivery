@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { Text, ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import Categories from "../Components/Categories";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,7 +8,7 @@ import Colors from "../constants/Colors";
 const Page = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
         <Categories />
         <Text style={styles.header}>Top picks in your neighbourhood</Text>
         <Restaraunts />

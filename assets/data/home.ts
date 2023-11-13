@@ -30,7 +30,7 @@ export const restaurants = [
     name: "Vapiano",
     rating: "4.5 Excellent",
     ratings: "(500+)",
-    distance: "0.7 miles away",
+    distance: "1.7 miles away",
     img: require("../../assets/data/r1.jpeg"),
     tags: ["Italian", "Pizza", "Pasta", "Salads"],
     duration: "35 - 45",
