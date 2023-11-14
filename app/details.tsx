@@ -1,13 +1,27 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  SectionList,
+  ListRenderItem,
+} from "react-native";
 import React, { useLayoutEffect } from "react";
 import ParallaxScrollView from "../Components/ParallaxScrollView";
 import Colors from "../constants/Colors";
 import { restaurant } from "../assets/data/restaurant";
-import { useNavigation } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 const Details = () => {
   const navigation = useNavigation();
+
+  const DATA = restaurant.food.map((item, index) => ({
+    title: item.category,
+    data: item.meals,
+    index,
+  }));
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,6 +49,17 @@ const Details = () => {
     });
   }, []);
 
+  const renderItem: ListRenderItem<any> = ({ item, index }) => (
+    <Link href={"/"} asChild>
+      <TouchableOpacity style={styles.item}>
+        <View>
+          <Text>{item.name}</Text>
+          <Text>${item.price}</Text>
+        </View>
+      </TouchableOpacity>
+    </Link>
+  );
+
   return (
     <>
       <ParallaxScrollView
@@ -56,7 +81,37 @@ const Details = () => {
         )}
       >
         <View style={styles.detailsContainer}>
-          <Text>DETAILS</Text>
+          <Text style={styles.restaurantName}>{restaurant.name}</Text>
+          <Text style={styles.restaurantDescription}>
+            {restaurant.delivery} ·{" "}
+            {restaurant.tags.map(
+              (tag, index) =>
+                `${tag}${index < restaurant.tags.length - 1 ? " · " : ""}`
+            )}
+          </Text>
+          <Text style={styles.restaurantDescription}>{restaurant.about}</Text>
+          <SectionList
+            contentContainerStyle={{ paddingBottom: 50 }}
+            keyExtractor={(item, index) => `${item.id + index}`}
+            scrollEnabled={false}
+            sections={DATA}
+            renderItem={renderItem}
+            ItemSeparatorComponent={() => (
+              <View
+                style={{
+                  marginHorizontal: 16,
+                  height: 1,
+                  backgroundColor: Colors.grey,
+                }}
+              />
+            )}
+            SectionSeparatorComponent={() => (
+              <View style={{ height: 1, backgroundColor: Colors.grey }} />
+            )}
+            renderSectionHeader={({ section: { title, index } }) => (
+              <Text style={styles.sectionHeader}>{title}</Text>
+            )}
+          />
         </View>
       </ParallaxScrollView>
     </>
@@ -90,6 +145,27 @@ const styles = StyleSheet.create({
   stickySectionText: {
     fontSize: 20,
     margin: 10,
+  },
+  restaurantName: {
+    fontSize: 30,
+    margin: 10,
+  },
+  restaurantDescription: {
+    fontSize: 16,
+    margin: 16,
+    lineHeight: 22,
+    color: Colors.medium,
+  },
+  sectionHeader: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 40,
+    margin: 40,
+  },
+  item: {
+    backgroundColor: "#fff",
+    padding: 16,
+    flexDirection: "row",
   },
 });
 
