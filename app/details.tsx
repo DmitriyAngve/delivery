@@ -52,10 +52,12 @@ const Details = () => {
   const renderItem: ListRenderItem<any> = ({ item, index }) => (
     <Link href={"/"} asChild>
       <TouchableOpacity style={styles.item}>
-        <View>
-          <Text>{item.name}</Text>
-          <Text>${item.price}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.dish}>{item.name}</Text>
+          <Text style={styles.dishText}>{item.info}</Text>
+          <Text style={styles.dishText}>${item.price}</Text>
         </View>
+        <Image source={item.img} style={styles.dishImage} />
       </TouchableOpacity>
     </Link>
   );
@@ -166,6 +168,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 16,
     flexDirection: "row",
+  },
+  dishImage: {
+    height: 80,
+    width: 80,
+    borderRadius: 4,
+  },
+  dish: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  dishText: {
+    fontSize: 14,
+    color: Colors.mediumDark,
+    paddingVertical: 4,
   },
 });
 
