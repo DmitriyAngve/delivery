@@ -8,10 +8,8 @@ import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, {
   FadeIn,
-  FadeInDown,
   FadeInLeft,
   FadeInRight,
-  FadeInUp,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 
