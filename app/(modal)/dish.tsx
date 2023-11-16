@@ -21,6 +21,7 @@ const Dish = () => {
   const addToCart = () => {
     // Это для запуска вибрации при вызове ф-ии "addToCart"
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
     router.back();
   };
 
