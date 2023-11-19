@@ -46,7 +46,6 @@ function CustomHeader() {
   const openModal = () => {
     bottomSheetRef.current?.present();
   };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <BottomSheet ref={bottomSheetRef} />
