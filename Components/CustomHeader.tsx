@@ -41,7 +41,6 @@ const SearchBar = () => (
 function CustomHeader() {
   // Используя "ref" и ф-ию "openModal" вызывается ф-ия "bottomSheetRef.current?.present();" для октрытия нижнего модального окна
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-
   const openModal = () => {
     bottomSheetRef.current?.present();
   };
