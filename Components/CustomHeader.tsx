@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
 } from "react-native";
+
 import React, { useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
@@ -40,7 +41,7 @@ const SearchBar = () => (
 
 function CustomHeader() {
   // Используя "ref" и ф-ию "openModal" вызывается ф-ия "bottomSheetRef.current?.present();" для октрытия нижнего модального окна
-  
+
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const openModal = () => {
     bottomSheetRef.current?.present();
