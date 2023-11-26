@@ -10,13 +10,9 @@ import {
 
 import React, { useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
-
 import Colors from "../constants/Colors";
-
 import { Link } from "expo-router";
-
 import BottomSheet from "./BottomSheet";
-
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const SearchBar = () => (
