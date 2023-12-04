@@ -12,13 +12,16 @@ import Animated, {
   FadeInRight,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
+import useBasketStore from "../../store/basketStore";
 
 const Dish = () => {
   const { id } = useLocalSearchParams();
-  const item = getDishById(+id); // +id - конвертирую
+  const item = getDishById(+id)!; // +id - конвертирую
   const router = useRouter();
+  const { addProduct } = useBasketStore();
 
   const addToCart = () => {
+    addProduct(item);
     // Это для запуска вибрации при вызове ф-ии "addToCart"
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 

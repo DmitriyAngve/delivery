@@ -56,3 +56,5 @@ const useBasketStore = create<BasketState>((set, get) => ({
   },
   clearCart: () => set({ products: [], items: 0, total: 0 }),
 }));
+
+export default useBasketStore;

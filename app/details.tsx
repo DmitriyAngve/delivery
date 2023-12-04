@@ -19,6 +19,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import useBasketStore from "../store/basketStore";
 
 const Details = () => {
   const navigation = useNavigation();
@@ -38,6 +39,8 @@ const Details = () => {
     data: item.meals,
     index,
   }));
+
+  const { items, total } = useBasketStore();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -154,6 +157,8 @@ const Details = () => {
           />
         </View>
       </ParallaxScrollView>
+
+      {/* Sticky segments */}
       <Animated.View style={[styles.stickySegment, animatedStyles]}>
         <View style={styles.segmentsShadow}>
           <ScrollView
@@ -187,6 +192,22 @@ const Details = () => {
           </ScrollView>
         </View>
       </Animated.View>
+
+      {/* Footer bascket */}
+      {/* Display this, than if items greater than 0 */}
+      {items > 0 && (
+        <View style={styles.footer}>
+          <View style={styles.footerContainer}>
+            <Link href="/" asChild>
+              <TouchableOpacity style={styles.fullButton}>
+                <Text style={styles.basket}>{items}</Text>
+                <Text style={styles.footerText}>View Basket</Text>
+                <Text style={styles.basketTotal}>${total}</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+        </View>
+      )}
     </>
   );
 };
@@ -303,6 +324,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
     paddingBottom: 4,
+  },
+  footer: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    padding: 10,
+    elevation: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    paddingTop: 20,
+  },
+  footerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 12,
+  },
+  footerText: {},
+  basket: {},
+  basketTotal: {},
+  fullButton: {
+    backgroundColor: Colors.primary,
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
   },
 });
 
